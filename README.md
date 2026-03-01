@@ -65,6 +65,7 @@ pip install -r requirements.txt
 ### 4. Konfigurasi Database (MySQL)
 - Pastikan server database MySQL Anda (seperti XAMPP / Laragon) sedang menyala.
 - Buat database baru bernama `kripto_sakti`.
+- Import skema tabel yang telah disediakan di file `database.sql` ke dalam database tersebut.
 - Pastikan URI akses database di `app/__init__.py` sesuai dengan *credential* lokal Anda (misal: `mysql+pymysql://root:@localhost/kripto_sakti`).
 
 ### 5. Jalankan Server
