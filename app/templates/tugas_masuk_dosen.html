@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tugas Masuk Mahasiswa</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <nav>
+        <h1><i class="fa-solid fa-chalkboard-user"></i> Kripto Sakti LMS</h1>
+        <div class="nav-links">
+            <a href="{{ url_for('main.dashboard_dosen') }}"><i class="fa-solid fa-arrow-left"
+                    style="margin-right: 6px;"></i>Kembali</a>
+        </div>
+    </nav>
+
+    <div class="container-wide">
+        <h2 style="text-align: center;"><i class="fa-solid fa-inbox"
+                style="color: var(--primary); margin-right: 10px;"></i>Tugas Masuk Mahasiswa</h2>
+        <p class="subtitle">Daftar tugas yang telah dikumpulkan oleh mahasiswa bimbingan Anda</p>
+
+        {% if tugas_list|length == 0 %}
+        <p style="text-align: center; color: var(--text-muted); padding: 40px 0;">
+            <i class="fa-solid fa-folder-open" style="font-size: 40px; margin-bottom: 20px; display: block;"></i>
+            Belum ada tugas yang dikumpulkan.<br>
+            Silakan buat tugas terlebih dahulu di menu <strong>Buat Tugas</strong>.
+        </p>
+        {% else %}
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Mahasiswa</th>
+                    <th>Judul Tugas</th>
+                    <th>Status</th>
+                    <th>Komentar</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tugas in tugas_list %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td><strong>{{ tugas.mahasiswa.nama }}</strong></td>
+                    <td>{{ tugas.judul }}</td>
+                    <td>
+                        {% if tugas.status == "Sudah Upload" %}
+                        <span class="status-upload">Sudah Upload</span>
+                        {% else %}
+                        <span class="status-belum">Belum Upload</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if tugas.komentar %}
+                        {{ tugas.komentar[:80] }}{% if tugas.komentar|length > 80 %}...{% endif %}
+                        {% else %}
+                        <em style="color:#999;">Belum ada komentar</em>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ url_for('main.lihat_tugas_dosen', tugas_id=tugas.id) }}">
+                            <button type="button" class="btn-primary" style="padding: 8px 16px; font-size: 14px;"><i
+                                    class="fa-solid fa-eye" style="margin-right: 6px;"></i>Detail</button>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+
+        <div style="text-align: center; margin-top: 35px;">
+            <button onclick="window.location.href='{{ url_for('main.dashboard_dosen') }}'" class="btn-secondary">
+                <i class="fa-solid fa-house" style="margin-right: 6px;"></i> Kembali ke Dashboard
+            </button>
+        </div>
+    </div>
+
+</body>
+
+</html>

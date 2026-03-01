@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Mahasiswa | Kripto Sakti LMS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <nav>
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <i class="fa-solid fa-shield-halved" style="color: var(--primary); font-size: 24px;"></i>
+            <h1 style="margin: 0;">Kripto Sakti</h1>
+        </div>
+        <div class="nav-links">
+            <a href="{{ url_for('main.logout') }}"><i class="fa-solid fa-right-from-bracket"
+                    style="margin-right: 6px;"></i>Logout</a>
+        </div>
+    </nav>
+
+    <div class="dashboard-wrapper">
+        <div style="text-align: center; margin-bottom: 40px;">
+            <h2><i class="fa-solid fa-user-graduate" style="color: var(--primary); margin-right: 12px;"></i>Dashboard
+                Mahasiswa</h2>
+            <p class="subtitle">Semangat belajar! Pantau tugas dan akademik Anda di sini.</p>
+        </div>
+
+        <!-- Flash Message -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-container" style="width: 100%;">
+            {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <div
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; width: 100%;">
+            <div class="dashboard-container" style="cursor: pointer; transition: transform 0.2s; text-align: center;"
+                onclick="window.location.href='{{ url_for('main.tugas_mahasiswa_list') }}'">
+                <i class="fa-solid fa-list-check"
+                    style="font-size: 36px; color: var(--primary); text-align: center; display: block; margin-bottom: 16px;"></i>
+                <h3 style="color: var(--primary); margin-top: 0;">Tugas Dari Dosen</h3>
+                <p style="color: var(--text-muted); font-size: 14px;">Lihat dan kerjakan tugas yang diberikan dosen</p>
+            </div>
+
+            <div class="dashboard-container" style="cursor: pointer; transition: transform 0.2s; text-align: center;"
+                onclick="window.location.href='{{ url_for('main.history_tugas_mahasiswa') }}'">
+                <i class="fa-solid fa-clock-rotate-left"
+                    style="font-size: 36px; color: var(--primary); text-align: center; display: block; margin-bottom: 16px;"></i>
+                <h3 style="color: var(--primary); margin-top: 0;">History Pengumpulan</h3>
+                <p style="color: var(--text-muted); font-size: 14px;">Cek status dan riwayat pengumpulan tugas Anda</p>
+            </div>
+
+            <div class="dashboard-container" style="cursor: pointer; transition: transform 0.2s; text-align: center;"
+                onclick="window.location.href='{{ url_for('main.lihat_transkrip_mahasiswa') }}'">
+                <i class="fa-solid fa-award"
+                    style="font-size: 36px; color: var(--primary); text-align: center; display: block; margin-bottom: 16px;"></i>
+                <h3 style="color: var(--primary); margin-top: 0;">Transkrip Nilai</h3>
+                <p style="color: var(--text-muted); font-size: 14px;">Akses dan verifikasi file LSB Transkrip</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

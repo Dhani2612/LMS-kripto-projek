@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Tugas - {{ tugas.mahasiswa.nama }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <nav>
+        <h1><i class="fa-solid fa-chalkboard-user"></i> Kripto Sakti LMS</h1>
+        <div class="nav-links">
+            <a href="{{ url_for('main.tugas_masuk_dosen') }}"><i class="fa-solid fa-arrow-left"
+                    style="margin-right: 6px;"></i>Kembali</a>
+        </div>
+    </nav>
+
+    <div class="container-wide">
+        <h2 style="text-align: center;"><i class="fa-solid fa-circle-info"
+                style="color: var(--primary); margin-right: 10px;"></i>Detail Tugas</h2>
+        <p class="subtitle">Lihat file tugas dan berikan komentar/revisi kepada mahasiswa</p>
+
+        <div class="dashboard-container" style="margin-bottom: 30px;">
+            <div style="margin-bottom: 15px; font-size: 16px;">
+                <strong style="display:inline-block; width:180px;"><i class="fa-solid fa-user"
+                        style="margin-right: 8px;"></i>Nama Mahasiswa:</strong> {{ tugas.mahasiswa.nama }}
+            </div>
+            <div style="margin-bottom: 15px; font-size: 16px;">
+                <strong style="display:inline-block; width:180px;"><i class="fa-solid fa-id-card"
+                        style="margin-right: 8px;"></i>NIM:</strong> {{ tugas.mahasiswa.nim }}
+            </div>
+            <div style="margin-bottom: 15px; font-size: 16px;">
+                <strong style="display:inline-block; width:180px;"><i class="fa-solid fa-tag"
+                        style="margin-right: 8px;"></i>Judul Tugas:</strong> {{ tugas.judul }}
+            </div>
+            <div style="margin-bottom: 15px; font-size: 16px; display:flex; align-items:center;">
+                <strong style="display:inline-block; width:180px;"><i class="fa-solid fa-file-zipper"
+                        style="margin-right: 8px;"></i>File Tugas:</strong>
+                {% if tugas.file_encrypted %}
+                <a href="{{ url_for('main.download_tugas_dosen', tugas_id=tugas.id) }}">
+                    <button type="button" class="btn-primary" style="background-color: #28a745; margin-left:10px;"><i
+                            class="fa-solid fa-download" style="margin-right: 6px;"></i>Download & Dekripsi
+                        File</button>
+                </a>
+                {% else %}
+                <span style="color:#e74c3c; font-weight:bold; margin-left:10px;">Belum Upload File</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <h3 style="color: var(--primary); margin-bottom:20px;"><i class="fa-solid fa-comment-medical"
+                style="margin-right: 8px;"></i>Komentar / Catatan untuk Mahasiswa</h3>
+
+        <form method="POST">
+            <textarea name="komentar" placeholder="Tulis komentar, saran perbaikan, atau feedback di sini..."
+                style="width: 100%; padding: 15px; border-radius: 8px; border: 1px solid #ccc; min-height: 120px; font-family: inherit; margin-bottom: 20px;">{{ tugas.komentar }}</textarea>
+
+            <div style="text-align: center;">
+                <button type="submit" class="btn-primary" style="font-size: 16px; padding: 12px 30px;">
+                    <i class="fa-solid fa-paper-plane" style="margin-right: 8px;"></i>Simpan Komentar
+                </button>
+            </div>
+        </form>
+
+        <div style="text-align:center; margin-top:40px;">
+            <button onclick="window.location.href='{{ url_for('main.tugas_masuk_dosen') }}'" class="btn-secondary">
+                <i class="fa-solid fa-list" style="margin-right: 6px;"></i> Kembali ke Daftar Tugas
+            </button>
+        </div>
+    </div>
+
+</body>
+
+</html>

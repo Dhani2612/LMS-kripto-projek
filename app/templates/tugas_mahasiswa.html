@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Tugas Mahasiswa</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <nav>
+        <h1><i class="fa-solid fa-graduation-cap"></i> Kripto Sakti LMS</h1>
+        <div class="nav-links">
+            <a href="{{ url_for('main.dashboard_mahasiswa') }}"><i class="fa-solid fa-arrow-left"
+                    style="margin-right: 6px;"></i>Kembali</a>
+        </div>
+    </nav>
+
+    <div class="container-wide">
+        <h2 style="text-align: center;"><i class="fa-solid fa-rectangle-list"
+                style="color: var(--primary); margin-right: 10px;"></i>Daftar Tugas dari Dosen</h2>
+        <p class="subtitle">Pilih tugas untuk melihat detail atau mengumpulkan file</p>
+
+        {% if tugas_list|length == 0 %}
+        <p style="text-align: center; color: var(--text-muted); padding: 40px 0;">
+            <i class="fa-solid fa-folder-open" style="font-size: 40px; margin-bottom: 20px; display: block;"></i>
+            Belum ada tugas dari dosen pembimbing.<br>
+            Silakan hubungi dosen wali Anda.
+        </p>
+        {% else %}
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Judul Tugas</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tugas in tugas_list %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td><strong>{{ tugas.judul }}</strong></td>
+                    <td>
+                        {% if tugas.file_encrypted %}
+                        <span style="color:#27ae60; font-weight:bold;">Sudah Upload</span>
+                        {% else %}
+                        <span style="color:#e74c3c; font-weight:bold;">Belum Upload</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ url_for('main.submit_tugas_mahasiswa', tugas_id=tugas.id) }}">
+                            <button class="btn-primary" style="padding: 8px 16px; font-size: 14px;"><i
+                                    class="fa-solid fa-upload" style="margin-right: 6px;"></i>Lihat / Upload</button>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+
+        <div style="text-align: center; margin-top: 35px;">
+            <button onclick="window.location.href='{{ url_for('main.dashboard_mahasiswa') }}'" class="btn-secondary">
+                <i class="fa-solid fa-house" style="margin-right: 6px;"></i> Kembali ke Dashboard
+            </button>
+        </div>
+    </div>
+
+</body>
+
+</html>

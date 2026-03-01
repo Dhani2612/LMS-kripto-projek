@@ -1,0 +1,355 @@
+@import url('https://fonts.googleapis.css2?family=Inter:wght@300;400;600;700&display=swap');
+
+/* Color Palette & Variables */
+:root {
+    --primary: #0F62FE;
+    /* Premium Blue */
+    --primary-hover: #0353E9;
+    --background: #F4F7FD;
+    /* Soft White/Blue tinted bg */
+    --surface: #FFFFFF;
+    --text-main: #161616;
+    --text-muted: #525252;
+    --border: #E0E0E0;
+    --success: #24A148;
+    --error: #DA1E28;
+    --shadow-sm: 0 4px 12px rgba(15, 98, 254, 0.08);
+    --shadow-md: 0 8px 24px rgba(15, 98, 254, 0.12);
+    --radius: 12px;
+    --transition: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Reset dasar */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding: 0;
+}
+
+/* Navbar (For Dashboards) */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: var(--surface);
+    padding: 16px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    z-index: 100;
+}
+
+nav h1 {
+    font-size: 20px;
+    color: var(--primary);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+nav .nav-links a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-left: 24px;
+    font-size: 14px;
+    transition: var(--transition);
+}
+
+nav .nav-links a:hover {
+    color: var(--primary);
+}
+
+/* Layout for Dashboards */
+.dashboard-wrapper {
+    margin-top: 80px;
+    width: 100%;
+    max-width: 1100px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* Container card (Login / Forms) */
+.container {
+    background-color: var(--surface);
+    padding: 48px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    width: 100%;
+    max-width: 440px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    margin: auto;
+}
+
+.container-wide {
+    background-color: var(--surface);
+    padding: 40px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    width: 100%;
+    max-width: 1100px;
+    margin: 100px auto 40px auto;
+}
+
+.dashboard-container {
+    background-color: var(--surface);
+    padding: 40px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    width: 100%;
+    margin-bottom: 24px;
+}
+
+/* Typography */
+h2 {
+    margin-bottom: 12px;
+    color: var(--text-main);
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+h3 {
+    font-size: 20px;
+    color: var(--text-main);
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+p.subtitle {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 32px;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="file"],
+select,
+textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 15px;
+    background-color: #FAFAFB;
+    color: var(--text-main);
+    transition: var(--transition);
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--primary);
+    background-color: var(--surface);
+    box-shadow: 0 0 0 4px rgba(15, 98, 254, 0.1);
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 12px rgba(15, 98, 254, 0.2);
+}
+
+button:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(15, 98, 254, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--primary);
+    border: 1.5px solid var(--primary);
+    box-shadow: none;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(15, 98, 254, 0.05);
+    box-shadow: none;
+}
+
+/* Links */
+.register-links {
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
+/* Tables for Dashboard */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: var(--surface);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th,
+td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    background-color: #FAFAFB;
+    font-weight: 600;
+    color: var(--text-muted);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+td {
+    font-size: 14px;
+    color: var(--text-main);
+}
+
+tr:hover {
+    background-color: rgba(15, 98, 254, 0.02);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Badges */
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.badge-success {
+    background: rgba(36, 161, 72, 0.1);
+    color: var(--success);
+}
+
+.badge-warning {
+    background: rgba(241, 194, 27, 0.1);
+    color: #B28600;
+}
+
+.badge-error {
+    background: rgba(218, 30, 40, 0.1);
+    color: var(--error);
+}
+
+/* Flash message */
+.flash-container {
+    margin-bottom: 24px;
+}
+
+.flash {
+    padding: 14px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.flash.error {
+    background-color: rgba(218, 30, 40, 0.1);
+    color: var(--error);
+    border: 1px solid rgba(218, 30, 40, 0.2);
+}
+
+.flash.success {
+    background-color: rgba(36, 161, 72, 0.1);
+    color: var(--success);
+    border: 1px solid rgba(36, 161, 72, 0.2);
+}
+
+.flash.info {
+    background-color: rgba(15, 98, 254, 0.1);
+    color: var(--primary);
+    border: 1px solid rgba(15, 98, 254, 0.2);
+}
+
+/* Responsive mobile */
+@media (max-width: 600px) {
+    .container {
+        padding: 40px 24px;
+    }
+
+    nav {
+        padding: 16px 20px;
+    }
+
+    .register-links {
+        flex-direction: column;
+        gap: 12px;
+    }
+}

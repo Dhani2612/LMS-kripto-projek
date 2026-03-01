@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.env
+
+# Database
+instance/sakti.db
+*.sqlite3
+
+# Flask/Development
+.flaskenv
+*.pem
+
+# OS generated files
+.DS_Store
+Thumbs.db

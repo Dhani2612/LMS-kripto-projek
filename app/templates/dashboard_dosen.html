@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Dosen | Kripto Sakti LMS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <nav>
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <i class="fa-solid fa-shield-halved" style="color: var(--primary); font-size: 24px;"></i>
+            <h1 style="margin: 0;">Kripto Sakti</h1>
+        </div>
+        <div class="nav-links">
+            <a href="{{ url_for('main.logout') }}"><i class="fa-solid fa-right-from-bracket"
+                    style="margin-right: 6px;"></i>Logout</a>
+        </div>
+    </nav>
+
+    <div class="dashboard-wrapper">
+        <div style="text-align: center; margin-bottom: 40px;">
+            <h2><i class="fa-solid fa-chalkboard-user" style="color: var(--primary); margin-right: 12px;"></i>Dashboard
+                Dosen</h2>
+            <p class="subtitle">Kelola tugas dan mahasiswa bimbingan Anda dengan mudah</p>
+        </div>
+
+        <!-- Flash Message -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-container" style="width: 100%;">
+            {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <div
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; width: 100%; margin-bottom: 40px;">
+            <div class="dashboard-container" style="cursor: pointer; transition: transform 0.2s; text-align: center;"
+                onclick="window.location.href='{{ url_for('main.buat_tugas') }}'">
+                <i class="fa-solid fa-file-circle-plus"
+                    style="font-size: 36px; color: var(--primary); text-align: center; display: block; margin-bottom: 16px;"></i>
+                <h3 style="color: var(--primary); margin-top: 0;">Buat Tugas Baru</h3>
+                <p style="color: var(--text-muted); font-size: 14px;">Distribusikan tugas terenkripsi</p>
+            </div>
+
+            <div class="dashboard-container" style="cursor: pointer; transition: transform 0.2s; text-align: center;"
+                onclick="window.location.href='{{ url_for('main.tugas_masuk_dosen') }}'">
+                <i class="fa-solid fa-inbox"
+                    style="font-size: 36px; color: var(--primary); text-align: center; display: block; margin-bottom: 16px;"></i>
+                <h3 style="color: var(--primary); margin-top: 0;">Tugas Masuk</h3>
+                <p style="color: var(--text-muted); font-size: 14px;">Evaluasi tugas dari mahasiswa</p>
+            </div>
+
+            <div class="dashboard-container" style="cursor: pointer; transition: transform 0.2s; text-align: center;"
+                onclick="window.location.href='{{ url_for('main.transkrip_dosen') }}'">
+                <i class="fa-solid fa-certificate"
+                    style="font-size: 36px; color: var(--primary); text-align: center; display: block; margin-bottom: 16px;"></i>
+                <h3 style="color: var(--primary); margin-top: 0;">Verifikasi Transkrip</h3>
+                <p style="color: var(--text-muted); font-size: 14px;">Unggah transkrip LSB Steganografi</p>
+            </div>
+        </div>
+
+        <!-- Daftar Mahasiswa (PAKAI TABEL SEPERTI YANG KAMU MAU!) -->
+        <div class="dashboard-container" style="width: 100%;">
+            <h3><i class="fa-solid fa-users" style="color: var(--primary); margin-right: 10px;"></i>Daftar Mahasiswa
+                Bimbingan</h3>
+
+            {% if mahasiswa_list|length == 0 %}
+            <p style="text-align: center; color: var(--text-muted); padding: 40px 0;">Belum ada mahasiswa bimbingan
+                terdaftar.</p>
+            {% else %}
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Lengkap</th>
+                            <th>NIM</th>
+                            <th>Jurusan</th>
+                            <th>Fakultas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for m in mahasiswa_list %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td style="font-weight: 500;">{{ m.nama }}</td>
+                            <td>{{ m.nim }}</td>
+                            <td><span class="badge badge-info"
+                                    style="background: rgba(15, 98, 254, 0.1); color: var(--primary);">{{ m.jurusan
+                                    }}</span></td>
+                            <td><span class="badge badge-warning"
+                                    style="background: rgba(241, 194, 27, 0.1); color: #B28600;">{{ m.fakultas }}</span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+
+            <div style="margin-top: 24px;">
+                <button onclick="window.location.href='{{ url_for('main.register_mahasiswa') }}'"
+                    class="btn-secondary"><i class="fa-solid fa-user-plus" style="margin-right: 8px;"></i>Tambah
+                    Mahasiswa</button>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

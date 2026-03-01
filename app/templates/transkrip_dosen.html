@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Verifikasi Transkrip Nilai</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <nav>
+        <h1><i class="fa-solid fa-chalkboard-user"></i> Kripto Sakti LMS</h1>
+        <div class="nav-links">
+            <a href="{{ url_for('main.dashboard_dosen') }}"><i class="fa-solid fa-arrow-left"
+                    style="margin-right: 6px;"></i>Kembali</a>
+        </div>
+    </nav>
+
+    <div class="container-wide" style="max-width: 800px;">
+        <h2 style="text-align: center;"><i class="fa-solid fa-shield-halved"
+                style="color: var(--primary); margin-right: 12px;"></i>Verifikasi & Penyisipan Data Transkrip Nilai</h2>
+        <p class="subtitle">Sisipkan data verifikasi ke dalam gambar transkrip menggunakan teknik LSB</p>
+
+        <form id="uploadForm" method="POST" enctype="multipart/form-data">
+
+            <div class="form-group">
+                <label for="mahasiswa_id">Pilih Mahasiswa</label>
+                <select name="mahasiswa_id" id="mahasiswa_id" required onchange="updateFormAction()">
+                    <option value="" disabled selected>-- Pilih Mahasiswa --</option>
+                    {% for mhs in mahasiswa_list %}
+                    <option value="{{ mhs.id }}">{{ mhs.nama }} (NIM: {{ mhs.nim }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="file">Upload File Transkrip (PNG/JPG/JPEG)</label>
+                <input type="file" name="file" id="file" accept=".png,.jpg,.jpeg" required>
+            </div>
+
+            <div class="form-group">
+                <label for="nama_dosen_wali">Nama Dosen Wali</label>
+                <input type="text" name="nama_dosen_wali" id="nama_dosen_wali" placeholder="Nama lengkap dosen wali"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="nidn">NIDN</label>
+                <input type="text" name="nidn" id="nidn" placeholder="Contoh: 0012345678" required>
+            </div>
+
+            <div class="form-group">
+                <label for="jurusan">Jurusan</label>
+                <select name="jurusan" id="jurusan" required>
+                    <option value="" disabled selected>-- Pilih Jurusan --</option>
+                    <option value="Informatika">Informatika</option>
+                    <option value="Teknik Industri">Teknik Industri</option>
+                    <option value="Teknik Kimia">Teknik Kimia</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="fakultas">Fakultas</label>
+                <input type="text" name="fakultas" id="fakultas" value="Fakultas Teknik Industri" readonly
+                    style="background-color: #eee;">
+                <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Fakultas sudah ditentukan:
+                    Fakultas Teknik Industri</div>
+            </div>
+
+            <div class="form-group">
+                <label for="tanggal_verif">Tanggal Verifikasi</label>
+                <input type="date" name="tanggal_verif" id="tanggal_verif" required>
+            </div>
+
+            <button type="submit" class="btn-primary" style="background-color: #28a745; width: 100%; margin-top: 20px;">
+                <i class="fa-solid fa-lock" style="margin-right: 8px;"></i>Sisipkan Data dengan LSB & Simpan
+            </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 35px;">
+            <a href="{{ url_for('main.dashboard_dosen') }}"
+                style="color: var(--primary); font-weight: 600; text-decoration: none;">
+                <i class="fa-solid fa-house" style="margin-right: 6px;"></i> Kembali ke Dashboard
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Set tanggal hari ini secara otomatis
+        document.getElementById('tanggal_verif').valueAsDate = new Date();
+
+        // Update action form sesuai mahasiswa yang dipilih
+        function updateFormAction() {
+            const mahasiswaId = document.getElementById('mahasiswa_id').value;
+            if (mahasiswaId) {
+                document.getElementById('uploadForm').action =
+                    `/dashboard/dosen/upload_transkrip/${mahasiswaId}`;
+            }
+        }
+    </script>
+
+</body>
+
+</html>
