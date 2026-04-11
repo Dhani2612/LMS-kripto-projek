@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Buat Tugas Baru</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Header + Tombol Kembali -->
+    <nav>
+        <h1><i class="fa-solid fa-chalkboard-user"></i> Kripto Sakti LMS</h1>
+        <div class="nav-links">
+            <a href="{{ url_for('main.dashboard_dosen') }}"><i class="fa-solid fa-arrow-left"
+                    style="margin-right: 6px;"></i>Kembali</a>
+        </div>
+    </nav>
+
+    <div class="container-wide" style="max-width: 800px;">
+        <h2 style="text-align: center;"><i class="fa-solid fa-clipboard-list"
+                style="margin-right: 12px; color: var(--primary);"></i>Formulir Pembuatan Tugas</h2>
+        <p class="subtitle">Pilih mahasiswa dan masukkan detail tugas yang akan diberikan</p>
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="mahasiswa_id">Pilih Mahasiswa Bimbingan</label>
+                <select name="mahasiswa_id" id="mahasiswa_id" required>
+                    <option value="" disabled selected>-- Pilih Mahasiswa --</option>
+                    {% for m in mahasiswa_list %}
+                    <option value="{{ m.id }}">{{ m.nama }} - {{ m.nim }} ({{ m.jurusan }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="judul">Judul Tugas</label>
+                <input type="text" name="judul" id="judul"
+                    placeholder="Contoh: Tugas Akhir Kriptografi - Implementasi Steganografi LSB" required>
+            </div>
+
+            <div class="form-group">
+                <label for="deskripsi">Deskripsi Tugas</label>
+                <textarea name="deskripsi" id="deskripsi"
+                    placeholder="Tuliskan deskripsi lengkap tugas di sini...&#10;Contoh:&#10;- Implementasikan enkripsi AES + Caesar Cipher&#10;- Gunakan steganografi LSB pada gambar transkrip&#10;- Deadline: 20 Desember 2025"
+                    required></textarea>
+            </div>
+
+            <button type="submit">
+                <i class="fa-solid fa-paper-plane" style="margin-right: 8px;"></i>Simpan & Kirim Tugas
+            </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 25px;">
+            <a href="{{ url_for('main.dashboard_dosen') }}"
+                style="color: var(--primary); text-decoration: none; font-weight: 600;">
+                <i class="fa-solid fa-house" style="margin-right: 6px;"></i>Kembali ke Dashboard Dosen
+            </a>
+        </div>
+    </div>
+
+</body>
+
+</html>

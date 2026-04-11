@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Register Mahasiswa</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2><i class="fa-solid fa-user-graduate" style="color: var(--primary); margin-right: 12px;"></i>Registrasi
+            Mahasiswa</h2>
+        <p class="subtitle">Daftarkan akun Mahasiswa baru di sistem</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-container">
+            {% for category, message in messages %}
+            <div class="flash {{ category }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="nama">Nama Mahasiswa</label>
+                <input type="text" id="nama" name="nama" placeholder="Masukkan nama Anda" required>
+            </div>
+
+            <div class="form-group">
+                <label for="nim">NIM</label>
+                <input type="text" id="nim" name="nim" placeholder="Nomor Induk Mahasiswa" required>
+            </div>
+
+            <div class="form-group">
+                <label for="jurusan">Jurusan</label>
+                <select id="jurusan" name="jurusan" required>
+                    <option value="" disabled selected>Pilih Jurusan</option>
+                    <option value="Informatika">Informatika</option>
+                    <option value="Teknik Industri">Teknik Industri</option>
+                    <option value="Teknik Kimia">Teknik Kimia</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="fakultas">Fakultas</label>
+                <input type="text" id="fakultas" name="fakultas" value="Fakultas Teknik Industri" readonly
+                    style="background-color: #eee;">
+            </div>
+
+            <div class="form-group">
+                <label for="dosen_wali_id">Dosen Wali</label>
+                <select id="dosen_wali_id" name="dosen_wali_id" required>
+                    <option value="" disabled selected>Pilih Dosen Wali</option>
+                    {% for dosen in dosen_list %}
+                    <option value="{{ dosen.id }}">{{ dosen.nama }} ({{ dosen.jurusan }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Buat password rahasia" required>
+            </div>
+
+            <button type="submit"><i class="fa-solid fa-user-plus" style="margin-right: 8px;"></i>Daftar</button>
+
+            <div class="register-links">
+                <a href="{{ url_for('main.login') }}">Sudah punya akun? Login</a>
+                <a href="{{ url_for('main.register_dosen') }}">Daftar Dosen</a>
+            </div>
+        </form>
+    </div>
+
+</body>
+
+</html>

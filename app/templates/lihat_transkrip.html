@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transkrip Nilai Saya</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <nav>
+        <h1><i class="fa-solid fa-graduation-cap"></i> Kripto Sakti LMS</h1>
+        <div class="nav-links">
+            <a href="{{ url_for('main.dashboard_mahasiswa') }}"><i class="fa-solid fa-arrow-left"
+                    style="margin-right: 6px;"></i>Kembali</a>
+        </div>
+    </nav>
+
+    <div class="container-wide">
+        <h2 style="text-align: center;"><i class="fa-solid fa-certificate"
+                style="color: var(--primary); margin-right: 10px;"></i>Transkrip Nilai Resmi</h2>
+        <p class="subtitle">Semua transkrip yang telah diverifikasi oleh dosen wali Anda menggunakan steganografi LSB
+        </p>
+
+        {% if transkrip_list|length == 0 %}
+        <p style="text-align: center; color: var(--text-muted); padding: 40px 0;">
+            <i class="fa-solid fa-folder-open" style="font-size: 40px; margin-bottom: 20px; display: block;"></i>
+            Belum ada transkrip nilai yang diunggah oleh dosen wali Anda.<br>
+            Silakan hubungi dosen wali untuk mengunggah transkrip resmi Anda.
+        </p>
+        {% else %}
+        {% for t in transkrip_list %}
+        <div class="dashboard-container">
+            <h3 style="color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 10px;"><i
+                    class="fa-solid fa-hashtag" style="margin-right: 8px;"></i>Transkrip #{{ loop.index }} &mdash; {{
+                t.tanggal_verifikasi.strftime('%d %B %Y') if t.tanggal_verifikasi else 'Tanggal Tidak Diketahui' }}</h3>
+
+            <!-- Gambar Transkrip -->
+            {% if t.nilai_image_encrypted %}
+            <p><strong>Gambar Transkrip Terverifikasi:</strong></p>
+            <img src="{{ url_for('main.serve_transkrip', transkrip_id=t.id) }}" alt="Transkrip {{ loop.index }}"
+                class="transkrip-img">
+
+            <div style="margin-top: 20px; display: flex; gap: 15px; flex-wrap: wrap;">
+                <button onclick="window.open('{{ url_for('main.serve_transkrip', transkrip_id=t.id) }}', '_blank')"
+                    class="btn-secondary">
+                    <i class="fa-solid fa-magnifying-glass" style="margin-right: 6px;"></i>Lihat Ukuran Penuh
+                </button>
+                <a href="{{ url_for('main.download_transkrip', transkrip_id=t.id) }}">
+                    <button class="btn-primary" style="background-color: #28a745;">
+                        <i class="fa-solid fa-download" style="margin-right: 6px;"></i>Download Transkrip (PNG)
+                    </button>
+                </a>
+            </div>
+            {% else %}
+            <p><em>Gambar transkrip belum tersedia.</em></p>
+            {% endif %}
+
+            <br>
+            <hr><br>
+
+            <!-- Data Verifikasi LSB -->
+            {% if t.verif_info %}
+            <p><strong>Data Verifikasi Tersembunyi (Steganografi LSB):</strong></p>
+            <pre>{{ t.verif_info | tojson(indent=2) }}</pre>
+            {% else %}
+            <p><em style="color:#dc3545;">Tidak dapat membaca data tersembunyi. File mungkin rusak atau belum
+                    diverifikasi dengan benar.</em></p>
+            {% endif %}
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <div style="text-align: center; margin-top: 35px;">
+            <button onclick="window.location.href='{{ url_for('main.dashboard_mahasiswa') }}'" class="btn-secondary">
+                <i class="fa-solid fa-house" style="margin-right: 6px;"></i> Kembali ke Dashboard Mahasiswa
+            </button>
+        </div>
+    </div>
+
+</body>
+
+</html>
